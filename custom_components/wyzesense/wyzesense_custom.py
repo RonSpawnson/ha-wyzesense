@@ -362,7 +362,6 @@ class Dongle(object):
 
                     s = s[start:]
                     log.debug("Trying to parse: %s", bytes_to_hex(s))
-                    time.sleep(4)
                     pkt = Packet.Parse(s)
                     if not pkt:
                         s = s[2:]
