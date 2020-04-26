@@ -10,6 +10,7 @@ import datetime
 import argparse
 import binascii
 import errno
+import traceback
 
 import logging
 log = logging.getLogger(__name__)
@@ -370,8 +371,11 @@ class Dongle(object):
                     s = s[pkt.Length:]
                     self._HandlePacket(pkt)
             except OSError as e:
+                log.error("Caught an OSError.")
                 log.error(e)
-                break
+            except Exception:
+                log.error("Caught a non OSError exception.")
+                traceback.print_exc()
 
     def _DoCommand(self, pkt, handler, timeout=_CMD_TIMEOUT):
         e = threading.Event()
